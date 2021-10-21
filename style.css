@@ -1,0 +1,80 @@
+﻿*{
+    margin: 0;
+    padding: 0;
+}
+a{ 
+    text-decoration: none;
+    color: white;
+}
+li{
+list-style: none;
+}
+
+body {
+    display: flex;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+.middleContext {
+    display: flex;
+}
+
+table {
+    border: 1px double #48aae6;
+}
+
+#cube td{
+    border: none;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    background-color: #48aae6;
+}
+
+.addButton {
+    width: 37px;
+    height: 37px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #f3a500;
+    color: white;
+    margin: 1px 1px;
+    border: 1px double #fff;
+}
+
+.deleteButton {
+    width: 37px;
+    height: 37px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #b20000;
+    color: white;
+    margin: 1px 1px;
+    border: 1px double #fff;
+}
+
+.addButton:hover {
+    background-color: #f6c052;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #ca4c49;
+    cursor: pointer;
+}
+.deleteCol {
+    margin-left: 38px;
+}
+.addRow {
+    margin-left: 38px;
+}
+#deleteRowsButton {
+    position: relative;
+}
+#deleteColsButton {
+    position: relative;
+}
