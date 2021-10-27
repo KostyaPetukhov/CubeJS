@@ -73,8 +73,10 @@ table td{
     margin-left: 38px;
 }
 #deleteRowsButton {
+    visibility: hidden;
     position: relative;
 }
 #deleteColsButton {
+    visibility: hidden;
     position: relative;
 }

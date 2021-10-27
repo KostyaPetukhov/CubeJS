@@ -1,16 +1,15 @@
 "use strict";
 
-let currentRow = 0;
-let currentColumn = 0;
+// let currentRow = 0;
+// let currentColumn = 0;
 
 class Cube {
         constructor (rows, columns) {
             this.rows = rows;
             this.columns = columns;
+            this.currentRow = 0;
+            this.currentColumn = 0;
             this.createBasicElements();
-            // this.addRows();
-            // this.addColumn();
-        
         }
         
         createBasicElements = () => {
@@ -21,10 +20,8 @@ class Cube {
             this.deleteColsButton.innerHTML = "&minus;";
             this.deleteColsButton.addEventListener('click', this.deleteColumn);
             this.deleteColsButton.addEventListener('mouseenter', this.showDeleteButtons);
-            // this.deleteColsButton.style.left = `${currentRow*37}px`;
             
-           
-            
+             
             this.deleteRowsButton = document.createElement('button'); 
             this.deleteRowsButton.classList.add('deleteButton');             
             this.deleteRowsButton.id = 'deleteRowsButton';
@@ -39,8 +36,7 @@ class Cube {
             this.table.addEventListener('mouseleave', this.hideDeleteButtons);
             this.table.addEventListener('mouseover', this.getCurrentIndex);
             
-            
-            
+
             this.addColsButton = document.createElement('button');
             this.addColsButton.classList.add('addButton');
             this.addColsButton.id = 'addColsButton';
@@ -53,10 +49,9 @@ class Cube {
             this.addRowsButton.id = 'addRowsButton';
             this.addRowsButton.innerHTML = "+";
             this.addRowsButton.addEventListener('click', this.addRow);
-            // this.addRowsButton.onclick = this.addRow;
-            
             
         }
+
         render = () => {
 
             const root = document.getElementById("root");
@@ -96,16 +91,13 @@ class Cube {
         getCurrentIndex = () => {
 
         this.table.addEventListener("mouseover", function (e) {
-            let rowIndex = e.target.parentElement.rowIndex;
-            let cellIndex = e.target.cellIndex;
+            this.currentRow = e.target.parentElement.rowIndex;
+            this.currentColumn = e.target.cellIndex;
         
-              if (rowIndex != undefined) {
-                console.log(`Строка: ${rowIndex}, Ячейка ${cellIndex}`);
-                currentRow = rowIndex;
-                currentColumn = cellIndex;
-                return currentColumn, currentRow;
-                // this.deleteColsButton.style.left =  20 +'px';//`${cellIndex*37}px`;
-                // this.deleteRowsButton.style.top = `${rowIndex*37}px`;
+              if (this.currentRow != undefined) {
+                console.log(`Строка: ${this.currentRow}, Ячейка ${this.currentColumn}`);
+                document.getElementById('deleteRowsButton').style.top = `${this.currentRow*37}px`;
+                document.getElementById('deleteColsButton').style.left = `${this.currentColumn*37}px`;
               }
           });
         }
@@ -120,10 +112,8 @@ class Cube {
               }
             this.table.append(tr);
             this.rows++;
-            console.log(currentRow);
         }
    
-
         addColumn = () => {
             
             const rows = this.table.querySelectorAll('tr');
@@ -136,13 +126,15 @@ class Cube {
         }
         
         deleteRow = () => {
-            // let currentRow = currentIndex.row;
-           
-              if(this.rows > 1)
-              {
-                this.table.removeChild(this.table.querySelectorAll('tr')[0]);
+
+            if(this.rows > 1) {
+                
+                this.table.removeChild(document.querySelectorAll('tr')[this.currentRow]);
                 this.rows--;
-            }
+                }
+                if (this.rows == this.currentRow) {
+                document.getElementById('deleteRowsButton').style.top = `${(this.currentRow-1)*37}px`;
+                }
         }
 
         deleteColumn = () => {
