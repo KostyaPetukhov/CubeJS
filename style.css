@@ -2,10 +2,12 @@
     margin: 0;
     padding: 0;
 }
+
 a{ 
     text-decoration: none;
     color: white;
 }
+
 li{
 list-style: none;
 }
@@ -14,9 +16,15 @@ body {
     display: flex;
 }
 
+#root {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 section {
     display: flex;
     flex-direction: column;
+    margin: 15px 0 0 20px;
 }
 
 .middleContext {
@@ -36,25 +44,23 @@ table td{
 }
 
 .addButton {
-    width: 37px;
-    height: 37px;
+    width: 35px;
+    height: 35px;
     font-size: 14px;
     font-weight: bold;
     background-color: #f3a500;
     color: white;
-    margin: 1px 1px;
-    border: 1px double #fff;
+    border: none
 }
 
 .deleteButton {
-    width: 37px;
-    height: 37px;
+    width: 35px;
+    height: 35px;
     font-size: 14px;
     font-weight: bold;
     background-color: #b20000;
     color: white;
-    margin: 1px 1px;
-    border: 1px double #fff;
+    border: none
 }
 
 .addButton:hover {
@@ -66,17 +72,35 @@ table td{
     background-color: #ca4c49;
     cursor: pointer;
 }
+
 .deleteCol {
-    margin-left: 38px;
+    margin-left: 36px;
 }
+
 .addRow {
-    margin-left: 38px;
+    margin-left: 36px;
 }
+
+#addColsButton {
+    margin: 3px 0.5px;
+    position: relative;
+}
+
+#addRowsButton {
+    margin: 0.5px 3px;
+    position: relative;
+}
+
 #deleteRowsButton {
     visibility: hidden;
     position: relative;
+    margin: 1px 0.5px;
+    transition-duration: .5s;
 }
+
 #deleteColsButton {
     visibility: hidden;
     position: relative;
+    margin: 0.5px 1px;
+    transition-duration: .5s;
 }

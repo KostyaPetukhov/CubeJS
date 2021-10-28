@@ -20,6 +20,7 @@ class Cube {
             this.deleteColsButton.innerHTML = "&minus;";
             this.deleteColsButton.addEventListener('click', this.deleteColumn);
             this.deleteColsButton.addEventListener('mouseenter', this.showDeleteButtons);
+            this.deleteColsButton.addEventListener('mouseleave', this.hideDeleteButtons);
             
              
             this.deleteRowsButton = document.createElement('button'); 
@@ -28,6 +29,7 @@ class Cube {
             this.deleteRowsButton.innerHTML = "&minus;";
             this.deleteRowsButton.addEventListener('click', this.deleteRow);
             this.deleteRowsButton.addEventListener('mouseenter', this.showDeleteButtons);
+            this.deleteRowsButton.addEventListener('mouseleave', this.hideDeleteButtons);
             
                 
             this.table = document.createElement('table');
@@ -55,18 +57,19 @@ class Cube {
         render = () => {
 
             const root = document.getElementById("root");
+            const section = document.createElement('section');
             
             const deleteCol = document.createElement('div');
             deleteCol.classList.add('deleteCol');
             deleteCol.append(this.deleteColsButton);
-            root.append(deleteCol);
+            section.append(deleteCol);
 
             const middleContext = document.createElement('div');
             middleContext.classList.add('middleContext');
 
             const deleteRow = document.createElement('div');
             deleteRow.append(this.deleteRowsButton);
-            root.append(middleContext);
+            section.append(middleContext);
             middleContext.append(deleteRow);  
 
                 for (let i = 0; i < this.rows; i++){
@@ -84,23 +87,22 @@ class Cube {
             const addRow = document.createElement('div');
             addRow.classList.add('addRow');
             addRow.append(this.addRowsButton);
-            root.append(addRow);
+            section.append(addRow);
+            root.append(section);
             
         }
 
-        getCurrentIndex = () => {
+        getCurrentIndex = (e) => {
 
-        this.table.addEventListener("mouseover", function (e) {
-            this.currentRow = e.target.parentElement.rowIndex;
-            this.currentColumn = e.target.cellIndex;
-        
-              if (this.currentRow != undefined) {
-                console.log(`Строка: ${this.currentRow}, Ячейка ${this.currentColumn}`);
-                document.getElementById('deleteRowsButton').style.top = `${this.currentRow*37}px`;
-                document.getElementById('deleteColsButton').style.left = `${this.currentColumn*37}px`;
-              }
-          });
-        }
+                if (e.target.nodeName === 'TD') {
+                this.currentRow = e.target.parentNode.rowIndex;
+                this.currentColumn = e.target.cellIndex;
+
+                this.deleteRowsButton.style.top = e.target.offsetTop + 'px';
+                this.deleteColsButton.style.left = e.target.offsetLeft + 'px';   
+                  }
+            }
+    
 
         addRow = () => {
            
@@ -127,25 +129,33 @@ class Cube {
         
         deleteRow = () => {
 
-            if(this.rows > 1) {
-                
-                this.table.removeChild(document.querySelectorAll('tr')[this.currentRow]);
+            if (this.rows > 1) {
+                this.table.removeChild(this.table.querySelectorAll('tr')[this.currentRow]);
                 this.rows--;
                 }
-                if (this.rows == this.currentRow) {
-                document.getElementById('deleteRowsButton').style.top = `${(this.currentRow-1)*37}px`;
-                }
+            if (this.rows == 1) {
+                this.deleteRowsButton.style.visibility = 'hidden';
+            }
+            if (this.rows == this.currentRow) {
+                this.deleteRowsButton.style.top = `${(this.currentRow-1)*37.5}px`;
+            }
         }
 
         deleteColumn = () => {
-            // let currentColumn = currentIndex.column;
+            
             const rows = this.table.querySelectorAll('tr');
             
                 if (this.columns > 1) {
-                for (let i = 0; i < this.rows; i++) {
-                    rows[i].removeChild(rows[i].getElementsByTagName('td')[0]);
+                    for (let i = 0; i < this.rows; i++) {
+                        rows[i].removeChild(rows[i].getElementsByTagName('td')[this.currentColumn]);
+                    }
+                  this.columns--;
                 }
-                this.columns--;
+                if (this.columns == 1) {
+                    this.deleteColsButton.style.visibility = 'hidden';
+                }
+                if (this.columns == this.currentColumn) {
+                    this.deleteColsButton.style.left = `${(this.currentColumn-1)*37.5}px`;
                 }
         }
 
@@ -168,8 +178,8 @@ class Cube {
 const firstCube = new Cube(4, 4);
 firstCube.render();
 
-// const secondCube = new Cube(5, 5);
-// secondCube.render();
+const secondCube = new Cube(5, 5);
+secondCube.render();
 
 
 
